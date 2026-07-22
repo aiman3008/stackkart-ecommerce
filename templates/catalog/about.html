@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}About — StackKart{% endblock %}
+{% block content %}
+<main class="page-shell">
+  <header class="page-header" style="max-width:720px;">
+    <p class="eyebrow">Our Story</p>
+    <h1>Built for everyone, by enthusiasts.</h1>
+    <p>StackKart started with a simple mission: curate the best tech gear for people who love great products. No fluff, no filler — just the tools that make a real difference in your daily workflow.</p>
+  </header>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;max-width:900px;margin-bottom:48px;">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;transition:all 0.4s ease;">
+      <div style="width:48px;height:48px;display:grid;place-items:center;border-radius:var(--radius-md);background:var(--accent-soft);color:var(--accent);font-size:1.4rem;margin-bottom:16px;">🎯</div>
+      <h3 style="font-size:1.1rem;font-weight:700;color:var(--text-bright);margin-bottom:8px;transition:color 0.4s ease;">Curated Selection</h3>
+      <p style="color:var(--muted);line-height:1.7;font-size:0.95rem;transition:color 0.4s ease;">Every product is hand-picked and tested by our team. We only stock gear we'd use in our own setups.</p>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;transition:all 0.4s ease;">
+      <div style="width:48px;height:48px;display:grid;place-items:center;border-radius:var(--radius-md);background:var(--accent-soft);color:var(--accent);font-size:1.4rem;margin-bottom:16px;">⚡</div>
+      <h3 style="font-size:1.1rem;font-weight:700;color:var(--text-bright);margin-bottom:8px;transition:color 0.4s ease;">Fast Shipping</h3>
+      <p style="color:var(--muted);line-height:1.7;font-size:0.95rem;transition:color 0.4s ease;">Free shipping on all orders. We dispatch within 24 hours so you can get back to work faster.</p>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;transition:all 0.4s ease;">
+      <div style="width:48px;height:48px;display:grid;place-items:center;border-radius:var(--radius-md);background:var(--accent-soft);color:var(--accent);font-size:1.4rem;margin-bottom:16px;">🛡️</div>
+      <h3 style="font-size:1.1rem;font-weight:700;color:var(--text-bright);margin-bottom:8px;transition:color 0.4s ease;">30-Day Returns</h3>
+      <p style="color:var(--muted);line-height:1.7;font-size:0.95rem;transition:color 0.4s ease;">Not satisfied? Return any item within 30 days for a full refund. No questions asked.</p>
+    </div>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;max-width:900px;transition:all 0.4s ease;">
+    <h2 style="font-size:1.3rem;font-weight:700;color:var(--text-bright);margin-bottom:16px;transition:color 0.4s ease;">Why StackKart?</h2>
+    <p style="color:var(--muted);line-height:1.8;margin-bottom:16px;transition:color 0.4s ease;">We know how much your setup matters. A great keyboard, a precise mouse, and a clear monitor can transform long hours into a comfortable, productive flow. That's why we focus exclusively on gear that professionals and everyday users actually need.</p>
+    <p style="color:var(--muted);line-height:1.8;margin-bottom:16px;transition:color 0.4s ease;">From mechanical keyboards to noise-cancelling headphones, every item in our catalog has been vetted for quality, durability, and real-world performance. We don't sell accessories — we sell tools that help you work better, play harder, and create more.</p>
+    <p style="color:var(--muted);line-height:1.8;transition:color 0.4s ease;">Founded in 2024, StackKart has grown from a small side project into a trusted destination for tech enthusiasts across Pakistan and beyond. Whether you're setting up your first home office or upgrading a battle-tested workstation, we're here to help you find the perfect gear.</p>
+  </div>
+</main>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Order Confirmed — StackKart{% endblock %}
+{% block content %}
+<main class="page-shell success-shell">
+  <section class="success-card">
+    <div class="success-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    </div>
+    <p class="eyebrow">Order Confirmed</p>
+    <h1>Thank you!</h1>
+    <p>Your order <strong>#{{ order.id }}</strong> has been created successfully.</p>
+
+    <div class="success-details">
+      <div><span>Status</span><strong>{{ order.get_status_display }}</strong></div>
+      <div><span>Total</span><strong>${{ order.total }}</strong></div>
+      {% if payment %}
+        <div><span>Payment</span><strong>{{ payment.get_gateway_display }}</strong></div>
+        <div><span>Reference</span><strong>{{ payment.gateway_reference }}</strong></div>
+      {% endif %}
+    </div>
+
+    {% if payment.gateway == 'jazzcash' or payment.gateway == 'easypaisa' %}
+      <div class="gateway-demo-box">
+        <p>Payment initiated via {{ payment.get_gateway_display }} (demo integration). You will receive a confirmation message shortly.</p>
+      </div>
+    {% endif %}
+
+    <a href="{% url 'catalog:home' %}" class="btn-primary btn-wide" style="display:inline-flex;">
+      Continue Shopping
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+    </a>
+  </section>
+</main>
+{% endblock %}

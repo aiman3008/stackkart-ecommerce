@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block title %}Your Cart — StackKart{% endblock %}
+{% block content %}
+<main class="page-shell">
+  <header class="page-header">
+    <p class="eyebrow">Shopping Cart</p>
+    <h1>Your cart.</h1>
+    <p>Review quantities, remove products, and continue to secure checkout.</p>
+  </header>
+
+  {% if messages %}
+    <div class="message-stack page-messages">
+      {% for message in messages %}<div class="message {{ message.tags }}">{{ message }}</div>{% endfor %}
+    </div>
+  {% endif %}
+
+  {% if cart.items.exists %}
+    <section class="cart-layout">
+      <div class="cart-list">
+        {% for item in cart.items.all %}
+          <article class="cart-row">
+            <a class="cart-thumb" href="{{ item.product.get_absolute_url }}">
+              {% if item.product.image_url %}
+                <img src="{{ item.product.image_url }}" alt="{{ item.product.name }}">
+              {% else %}
+                <div class="placeholder">{{ item.product.name|first }}</div>
+              {% endif %}
+            </a>
+            <div class="cart-row-info">
+              {% if item.product.tag %}
+                <span class="card-badge {{ item.product.tag }}" style="position:static;display:inline-flex;margin-bottom:8px;">
+                  {% if item.product.tag == 'sale' and item.product.discount_percent %}
+                    -{{ item.product.discount_percent }}%
+                  {% else %}
+                    {{ item.product.get_tag_display }}
+                  {% endif %}
+                </span>
+              {% endif %}
+              <h3>{{ item.product.name }}</h3>
+              <p>${{ item.product.price }} each · {{ item.product.stock }} in stock</p>
+              <div class="cart-actions-row">
+                <form method="post" action="{% url 'cart:update_item' item.id %}" class="qty-form">
+                  {% csrf_token %}
+                  <label>Qty</label>
+                  <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.product.stock }}">
+                  <button class="btn-outline" type="submit">Update</button>
+                </form>
+                <form method="post" action="{% url 'cart:remove_item' item.id %}">
+                  {% csrf_token %}
+                  <button class="btn-danger" type="submit">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    Remove
+                  </button>
+                </form>
+              </div>
+            </div>
+            <strong class="cart-line-total">${{ item.line_total }}</strong>
+          </article>
+        {% endfor %}
+      </div>
+
+      <aside class="summary-card">
+        <h2>Order Summary</h2>
+        <div class="summary-line"><span>Subtotal</span><strong>${{ cart.total }}</strong></div>
+        <div class="summary-line"><span>Shipping</span><strong>Calculated at checkout</strong></div>
+        <div class="summary-total"><span>Total</span><strong>${{ cart.total }}</strong></div>
+        {% if user.is_authenticated %}
+          <a href="{% url 'cart:checkout' %}" class="btn-primary btn-wide" style="margin-top:12px;">
+            Proceed to Checkout
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        {% else %}
+          <a href="{% url 'accounts:login' %}?next={% url 'cart:checkout' %}" class="btn-primary btn-wide" style="margin-top:12px;">
+            Login to Checkout
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+          </a>
+        {% endif %}
+        <a href="{% url 'catalog:home' %}" class="continue-link">Continue shopping</a>
+      </aside>
+    </section>
+  {% else %}
+    <section class="empty-state" style="max-width:600px;margin:0 auto;">
+      <div class="empty-icon">🛒</div>
+      <h2>Your cart is empty</h2>
+      <p>Add some StackKart products before checkout.</p>
+      <a href="{% url 'catalog:home' %}" class="btn-primary" style="margin-top:20px;display:inline-flex;">
+        Browse Products
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </a>
+    </section>
+  {% endif %}
+</main>
+{% endblock %}

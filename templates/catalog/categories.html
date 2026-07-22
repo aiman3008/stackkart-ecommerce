@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Categories — StackKart{% endblock %}
+{% block content %}
+<main class="page-shell">
+  <header class="page-header">
+    <p class="eyebrow">Browse</p>
+    <h1>Shop by category.</h1>
+    <p>Explore our curated collections of premium tech and accessories.</p>
+  </header>
+
+  <div class="product-grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));">
+    {% for category in categories %}
+      <a href="{% url 'catalog:home' %}?category={{ category.slug }}" class="product-card" style="text-align:center;padding:32px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
+        <div style="font-size:3rem;line-height:1;">
+          {% if 'laptop' in category.icon %}💻{% elif 'keyboard' in category.icon %}⌨️{% elif 'mouse' in category.icon %}🖱️{% elif 'audio' in category.icon or 'headphone' in category.icon %}🎧{% elif 'monitor' in category.icon %}🖥️{% elif 'code' in category.icon or 'zap' in category.icon %}⚡{% else %}📦{% endif %}
+        </div>
+        <h3 class="card-title" style="margin-bottom:4px;">{{ category.name }}</h3>
+        <p class="card-subtitle" style="margin-bottom:0;">{{ category.product_count }} product{{ category.product_count|pluralize }}</p>
+      </a>
+    {% empty %}
+      <div class="empty-state">
+        <div class="empty-icon">📂</div>
+        <h2>No categories found</h2>
+        <p>Check back later for new collections.</p>
+      </div>
+    {% endfor %}
+  </div>
+</main>
+{% endblock %}

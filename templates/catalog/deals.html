@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}Deals — StackKart{% endblock %}
+{% block content %}
+<main class="page-shell">
+  <header class="page-header">
+    <p class="eyebrow">Limited Time</p>
+    <h1>Hot deals.</h1>
+    <p>Save big on premium tech gear. Discounts up to 20% off.</p>
+  </header>
+
+  <main class="product-grid">
+    {% for product in products %}
+      <article class="product-card" data-quick-view="{{ product.id }}">
+        <div class="card-image-wrap">
+          <a href="{{ product.get_absolute_url }}" class="quick-view-trigger">
+            {% if product.image_url %}
+              <img src="{{ product.image_url }}" alt="{{ product.name }}" loading="lazy">
+            {% else %}
+              <div class="placeholder-img" style="width:100%;aspect-ratio:4/3;display:grid;place-items:center;font-size:3rem;font-weight:900;color:var(--accent);background:linear-gradient(135deg,#111827,#0d1117);">{{ product.name|first }}</div>
+            {% endif %}
+          </a>
+          <span class="card-badge sale" style="background:var(--accent);color:#000;border-color:var(--accent);font-weight:700;">
+            -{{ product.discount_percent }}%
+          </span>
+          <button class="card-wishlist {% if product.id in wishlist_ids %}active{% endif %}" data-wishlist-id="{{ product.id }}" data-wishlist-data='{"id":{{ product.id }},"name":"{{ product.name|escapejs }}","price":"{{ product.price }}","image_url":"{{ product.image_url|default:''|escapejs }}","subtitle":"{{ product.subtitle|escapejs }}","slug":"{{ product.slug }}"}' aria-label="Toggle wishlist">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="{% if product.id in wishlist_ids %}currentColor{% else %}none{% endif %}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          </button>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">{{ product.name }}</h3>
+          <p class="card-subtitle">{{ product.subtitle }}</p>
+          <div class="card-rating">
+            <span class="stars">
+              {% for i in "12345" %}
+                {% if forloop.counter0 < product.rating %}★{% else %}☆{% endif %}
+              {% endfor %}
+            </span>
+            <span class="rating-count">{{ product.rating }} ({{ product.review_count }})</span>
+          </div>
+          <div class="card-footer">
+            <div class="price-block">
+              <span class="price">${{ product.price }}</span>
+              <span class="price-original">${{ product.original_price }}</span>
+            </div>
+            <button class="btn-cart" data-add-cart="{{ product.id }}" aria-label="Add to cart">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+    {% empty %}
+      <div class="empty-state">
+        <div class="empty-icon">🏷️</div>
+        <h2>No active deals</h2>
+        <p>Check back soon for new discounts on tech gear.</p>
+      </div>
+    {% endfor %}
+  </main>
+</main>
+{% endblock %}
