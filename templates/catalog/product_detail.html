@@ -31,9 +31,9 @@
       <span style="color:var(--muted);font-size:0.9rem;">{{ product.rating }} ({{ product.review_count }} reviews)</span>
     </div>
     <div class="detail-price">
-      <span class="price">${{ product.price }}</span>
+      <span class="price">Rs {{ product.price }}</span>
       {% if product.original_price %}
-        <span class="price-original">${{ product.original_price }}</span>
+        <span class="price-original">Rs {{ product.original_price }}</span>
       {% endif %}
     </div>
     <div class="stock-badge">
@@ -93,7 +93,7 @@
             <h3 class="card-title">{{ rp.name }}</h3>
             <p class="card-subtitle">{{ rp.subtitle }}</p>
             <div class="card-footer">
-              <div class="price-block"><span class="price">${{ rp.price }}</span>{% if rp.original_price %}<span class="price-original">${{ rp.original_price }}</span>{% endif %}</div>
+  <div class="price-block"><span class="price">Rs {{ rp.price }}</span>{% if rp.original_price %}<span class="price-original">Rs {{ rp.original_price }}</span>{% endif %}</div>
               <button class="btn-cart" data-add-cart="{{ rp.id }}" aria-label="Add to cart"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg></button>
             </div>
           </div>
@@ -122,7 +122,7 @@
             <h3 class="card-title">{{ cp.name }}</h3>
             <p class="card-subtitle">{{ cp.subtitle }}</p>
             <div class="card-footer">
-              <div class="price-block"><span class="price">${{ cp.price }}</span>{% if cp.original_price %}<span class="price-original">${{ cp.original_price }}</span>{% endif %}</div>
+                            <div class="price-block"><span class="price">Rs {{ cp.price }}</span>{% if cp.original_price %}<span class="price-original">Rs {{ cp.original_price }}</span>{% endif %}</div>
               <button class="btn-cart" data-add-cart="{{ cp.id }}" aria-label="Add to cart"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg></button>
             </div>
           </div>

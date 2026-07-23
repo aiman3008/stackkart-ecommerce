@@ -73,10 +73,10 @@
       {% for item in cart.items.all %}
         <div class="summary-product">
           <span>{{ item.product.name }} × {{ item.quantity }}</span>
-          <strong>${{ item.line_total }}</strong>
+          <strong>Rs {{ item.line_total }}</strong>
         </div>
       {% endfor %}
-      <div class="summary-total"><span>Total</span><strong>${{ cart.total }}</strong></div>
+      <div class="summary-total"><span>Total</span><strong>Rs {{ cart.total }}</strong></div>
       <p class="payment-note">JazzCash and EasyPaisa are configured as demo integrations. Cash on Delivery is available across Pakistan.</p>
     </aside>
   </section>

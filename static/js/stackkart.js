@@ -6,7 +6,7 @@ function getCookie(name) {
 
 function formatPrice(value) {
   const number = Number(value || 0);
-  return `$${number.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  return `Rs ${number.toLocaleString('en-PK', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
 }
 
 /* Cart Panel */
@@ -576,8 +576,8 @@ function openQuickView(productId) {
           <h2>${p.name}</h2>
           <p class="desc">${p.description}</p>
           <div class="price" style="font-size:1.5rem;color:var(--accent);font-weight:700;margin-bottom:20px;">
-            $${Number(p.price).toFixed(2)}
-            ${p.original_price ? `<span style="text-decoration:line-through;color:var(--muted-dark);font-size:1rem;margin-left:10px;">$${Number(p.original_price).toFixed(2)}</span>` : ''}
+            Rs ${Number(p.price).toLocaleString('en-PK')}
+            ${p.original_price ? `<span style="text-decoration:line-through;color:var(--muted-dark);font-size:1rem;margin-left:10px;">Rs ${Number(p.original_price).toLocaleString('en-PK')}</span>` : ''}
           </div>
           <div class="actions">
             <button class="btn-primary" data-add-cart="${p.id}">

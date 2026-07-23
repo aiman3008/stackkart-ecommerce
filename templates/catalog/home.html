@@ -200,9 +200,9 @@
             </div>
             <div class="card-footer">
               <div class="price-block">
-                <span class="price">${{ product.price }}</span>
+                <span class="price">Rs {{ product.price }}</span>
                 {% if product.original_price %}
-                  <span class="price-original">${{ product.original_price }}</span>
+                  <span class="price-original">Rs {{ product.original_price }}</span>
                 {% endif %}
               </div>
               <button class="btn-cart" data-add-cart="{{ product.id }}" aria-label="Add to cart">
@@ -239,7 +239,7 @@
               <div class="cart-latest-info">
                 <h4>{{ latest.product.name }}</h4>
                 <p>{{ latest.product.subtitle }}</p>
-                <div class="cart-latest-price">${{ latest.line_total }}</div>
+                <div class="cart-latest-price">Rs {{ latest.line_total }}</div>
               </div>
             </div>
           {% endwith %}
@@ -253,7 +253,7 @@
                 {% endif %}
                 <div class="cart-mini-info">
                   <h4>{{ item.product.name }}</h4>
-                  <div class="cart-mini-price">${{ item.line_total }}</div>
+                  <div class="cart-mini-price">Rs {{ item.line_total }}</div>
                 </div>
                 <div class="cart-mini-actions">
                   <button class="qty-btn" data-qty-change="{{ item.id }}" data-delta="-1">-</button>
@@ -272,7 +272,7 @@
             <div class="cart-latest-info">
               <h4>Your cart is empty</h4>
               <p>Add a product to get started</p>
-              <div class="cart-latest-price">$0.00</div>
+              <div class="cart-latest-price">Rs 0</div>
             </div>
           </div>
           <p style="color:var(--muted);font-size:0.9rem;text-align:center;padding:20px 0;">Your cart is empty.</p>
@@ -281,7 +281,7 @@
       <div class="cart-sidebar-footer">
         <div class="cart-subtotal-line">
           <span>Subtotal</span>
-          <strong>${{ cart.total }}</strong>
+          <strong>Rs {{ cart.total }}</strong>
         </div>
         <div class="cart-shipping-line">
           <span>Shipping</span>

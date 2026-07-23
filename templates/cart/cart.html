@@ -37,7 +37,7 @@
                 </span>
               {% endif %}
               <h3>{{ item.product.name }}</h3>
-              <p>${{ item.product.price }} each · {{ item.product.stock }} in stock</p>
+              <p>Rs {{ item.product.price }} each · {{ item.product.stock }} in stock</p>
               <div class="cart-actions-row">
                 <form method="post" action="{% url 'cart:update_item' item.id %}" class="qty-form">
                   {% csrf_token %}
@@ -54,16 +54,16 @@
                 </form>
               </div>
             </div>
-            <strong class="cart-line-total">${{ item.line_total }}</strong>
+            <strong class="cart-line-total">Rs {{ item.line_total }}</strong>
           </article>
         {% endfor %}
       </div>
 
       <aside class="summary-card">
         <h2>Order Summary</h2>
-        <div class="summary-line"><span>Subtotal</span><strong>${{ cart.total }}</strong></div>
+        <div class="summary-line"><span>Subtotal</span><strong>Rs {{ cart.total }}</strong></div>
         <div class="summary-line"><span>Shipping</span><strong>Calculated at checkout</strong></div>
-        <div class="summary-total"><span>Total</span><strong>${{ cart.total }}</strong></div>
+        <div class="summary-total"><span>Total</span><strong>Rs {{ cart.total }}</strong></div>
         {% if user.is_authenticated %}
           <a href="{% url 'cart:checkout' %}" class="btn-primary btn-wide" style="margin-top:12px;">
             Proceed to Checkout
