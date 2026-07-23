@@ -257,8 +257,81 @@ select {
   #changelist-filter { margin-left: 0 !important; }
   #header { flex-wrap: wrap !important; gap: 10px !important; padding: 12px 16px !important; }
 }
-/* Dashboard: hide default "Site administration" h1, replace with styled version */
 #content-main > h1 { display: none !important; }
+
+/* === Admin Theme Toggle === */
+.admin-theme-toggle {
+  background: transparent !important;
+  border: 1px solid var(--a-border) !important;
+  border-radius: 8px !important;
+  padding: 6px 10px !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--a-text) !important;
+  width: 36px !important;
+  height: 36px !important;
+  box-shadow: none !important;
+  margin-left: 12px !important;
+  transition: all 0.2s ease !important;
+}
+.admin-theme-toggle:hover {
+  background: var(--a-accent-soft) !important;
+  border-color: var(--a-accent) !important;
+  color: var(--a-accent) !important;
+}
+.admin-theme-toggle svg { width: 18px !important; height: 18px !important; }
+.admin-theme-toggle .icon-sun { display: none; }
+.admin-theme-toggle .icon-moon { display: inline-block; }
+html.admin-light .admin-theme-toggle .icon-sun { display: inline-block; }
+html.admin-light .admin-theme-toggle .icon-moon { display: none; }
+.admin-theme-toggle:hover {
+  background: var(--a-accent-soft) !important;
+  border-color: var(--a-accent) !important;
+  color: var(--a-accent) !important;
+}
+
+/* Light theme overrides */
+html.admin-light {
+  --a-bg: #f1f5f9 !important;
+  --a-surface: #ffffff !important;
+  --a-surface2: #f8fafc !important;
+  --a-border: #e2e8f0 !important;
+  --a-border2: #cbd5e1 !important;
+  --a-accent: #16a34a !important;
+  --a-accent2: #15803d !important;
+  --a-accent-soft: rgba(22,163,74,0.10) !important;
+  --a-text: #1e293b !important;
+  --a-text-bright: #0f172a !important;
+  --a-muted: #64748b !important;
+  --a-muted2: #94a3b8 !important;
+  --a-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
+}
+html.admin-light body { background: #f1f5f9 !important; }
+html.admin-light #header { background: #ffffff !important; border-bottom: 1px solid #e2e8f0 !important; }
+html.admin-light .module h2,
+html.admin-light .module caption,
+html.admin-light .inline-group h2,
+html.admin-light fieldset h2,
+html.admin-light #changelist-form,
+html.admin-light #content-main table caption,
+html.admin-light #result_list thead th,
+html.admin-light #content-related .module h2 {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+html.admin-light input,
+html.admin-light select,
+html.admin-light textarea {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #1e293b !important;
+}
+html.admin-light .icon-moon { display: none !important; }
+html.admin-light .icon-sun { display: inline !important; }
+
 .dashboard-title {
   font-size: 1.5rem !important; font-weight: 800 !important; color: var(--a-text-bright) !important;
   margin-bottom: 20px !important; letter-spacing: -0.02em !important; display: block !important;
@@ -268,9 +341,36 @@ select {
 {% block branding %}
 <h1 id="site-name">
   <a href="{% url 'admin:index' %}">
-    <span style="color:#22c55e;font-weight:800;">Stack</span><span style="color:#fff;font-weight:800;">Kart</span>
+    <span style="color:#22c55e;font-weight:800;">Stack</span><span id="logoKart" style="color:#fff;font-weight:800;">Kart</span>
     <span style="color:#64748b;font-weight:400;font-size:0.75rem;margin-left:8px;letter-spacing:0.04em;">ADMIN</span>
   </a>
 </h1>
+<button type="button" id="adminThemeToggle" class="admin-theme-toggle" aria-label="Toggle theme" title="Toggle dark/light theme">
+  <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+  <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+</button>
+<script>
+(function() {
+  var KEY = 'stackkart-admin-theme';
+  var html = document.documentElement;
+  function apply(t) {
+    if (t === 'light') html.classList.add('admin-light');
+    else html.classList.remove('admin-light');
+    var logo = document.getElementById('logoKart');
+    if (logo) logo.style.color = t === 'light' ? '#0f172a' : '#fff';
+  }
+  var saved = localStorage.getItem(KEY) || 'dark';
+  apply(saved);
+  var btn = document.getElementById('adminThemeToggle');
+  if (btn) btn.addEventListener('click', function() {
+    var next = html.classList.contains('admin-light') ? 'dark' : 'light';
+    apply(next);
+    localStorage.setItem(KEY, next);
+    var moon = btn.querySelector('.icon-moon');
+    var sun = btn.querySelector('.icon-sun');
+    if (moon) moon.style.display = next === 'light' ? 'none' : 'inline';
+    if (sun) sun.style.display = next === 'light' ? 'inline' : 'none';
+  });
+})();
+</script>
 {% endblock %}
-{% block nav-global %}{% endblock %}
